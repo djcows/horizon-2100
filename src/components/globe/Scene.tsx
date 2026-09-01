@@ -2,7 +2,6 @@
 
 import { Stars } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 import { useSim } from "@/lib/sim/store";
 import { SUN_DIR } from "./sparks";
 import { Activity } from "./Activity";
@@ -53,5 +52,3 @@ export function Scene({ reduced }: { reduced: boolean }) {
     </>
   );
 }
-
-void THREE;
