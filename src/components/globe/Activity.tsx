@@ -1,7 +1,7 @@
 "use client";
 
 import { Html, Line } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { EARTH_RADIUS, latLonToXYZ } from "@/lib/sim/geo";
@@ -12,11 +12,6 @@ import { greatCirclePoints, KIND_CUE, KIND_HEX, mulberry32, robotActivity } from
 
 const MAX_P = 1600;
 const UP = new THREE.Vector3(0, 1, 0);
-const _n = new THREE.Vector3();
-const _p = new THREE.Vector3();
-const _q = new THREE.Quaternion();
-const _m = new THREE.Matrix4();
-const _s = new THREE.Vector3();
 const _c = new THREE.Color();
 
 function pulseAt(year: number, mark: number) {
@@ -89,15 +84,12 @@ export function Activity({ reduced }: { reduced: boolean }) {
     [],
   );
 
-  const arcMats = useRef<(THREE.LineDashedMaterial | THREE.Material)[]>([]);
-
   useFrame((state, dt) => {
     const year = useSim.getState().year;
     const snap = sample(year);
     const act = robotActivity(snap.robots);
     const pulse =
       reduced ? 0 : Math.max(pulseAt(year, 2036), pulseAt(year, 2045) * 0.7, pulseAt(year, 2100) * 0.8);
-    const logScale = 0.35 + act * 0.9;
     const t = state.clock.elapsedTime;
 
     if (beamMesh.current && glowMesh.current) {
@@ -171,8 +163,6 @@ export function Activity({ reduced }: { reduced: boolean }) {
     }
   });
 
-  const yearNow = useSim.getState().year;
-
   return (
     <group>
       <instancedMesh ref={beamMesh} args={[undefined, undefined, origins.length]}>
@@ -231,7 +221,6 @@ export function Activity({ reduced }: { reduced: boolean }) {
           </div>
         </Html>
       ))}
-      <group visible={false}>{yearNow}</group>
     </group>
   );
 }
