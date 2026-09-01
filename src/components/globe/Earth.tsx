@@ -132,7 +132,6 @@ export function Earth({ reduced }: { reduced: boolean }) {
       mat.current.uniforms.sunDir.value.copy(SUN_DIR);
     }
     if (!reduced) {
-      if (group.current) group.current.rotation.y += dt * 0.038;
       if (clouds.current) clouds.current.rotation.y += dt * 0.052;
     }
   });
