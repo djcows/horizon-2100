@@ -439,7 +439,6 @@ controls.addEventListener('start',()=>{interacting=true;flying=false});
 controls.addEventListener('end',()=>{interacting=false;resumeAt=elapsed+1.2});
 
 const sunPos=SUN_DIR.clone().multiplyScalar(18);
-scene.add(new THREE.DirectionalLight('#fff1d0',2.2).translateX(sunPos.x).translateY(sunPos.y).translateZ(sunPos.z));
 const dir=new THREE.DirectionalLight('#fff1d0',2.2);dir.position.copy(sunPos);scene.add(dir);
 scene.add(new THREE.HemisphereLight('#1a3355','#09080a',.3));
 scene.add(new THREE.AmbientLight(0xffffff,.045));
@@ -581,7 +580,7 @@ function loop(now){
     dummy.scale.set(.55+inten*.8,Math.max(hgt,.001),.55+inten*.8);
     dummy.updateMatrix();beamMesh.setMatrixAt(i,dummy.matrix);_c.copy(o.color);beamMesh.setColorAt(i,_c);
     dummy.position.copy(o.p).addScaledVector(o.n,.03);dummy.quaternion.identity();
-    dummy.scale.setScalar(vis?.018+inten*.03*(1+pulse):.0001);dummy.updateMatrix();
+    dummy.scale.setScalar(vis ? 0.018+inten*0.03*(1+pulse) : 0.0001);dummy.updateMatrix();
     glowMesh.setMatrixAt(i,dummy.matrix);glowMesh.setColorAt(i,_c);
   }
   beamMesh.instanceMatrix.needsUpdate=true;glowMesh.instanceMatrix.needsUpdate=true;
@@ -591,7 +590,7 @@ function loop(now){
   const visCount=Math.floor(80+act*(MAX_P-80));
   pgeo.setDrawRange(0,visCount);
   const dist=camera.position.length();
-  pts.material.size=dist<3?.045:.028;pts.material.opacity=.35+act*.5;
+  pts.material.size=dist<3 ? 0.045 : 0.028;pts.material.opacity=.35+act*.5;
   if(!reduced){
     const arr=pgeo.attributes.position.array;
     for(let i=0;i<visCount;i++){
@@ -602,7 +601,7 @@ function loop(now){
     pgeo.attributes.position.needsUpdate=true;
   }
   for(const a of arcLines){
-    const on=year>=a.from.start&&year>=a.to.start;const target=on?.62:0;
+    const on=year>=a.from.start&&year>=a.to.start;const target=on ? 0.62 : 0;
     a.op+=(target-a.op)*Math.min(1,dt*2.4);a.line.material.opacity=a.op;
     if(!reduced)a.line.material.dashOffset-=dt*.35;
   }
