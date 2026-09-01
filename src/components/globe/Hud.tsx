@@ -161,7 +161,7 @@ export function Hud({ reduced }: { reduced: boolean }) {
                 aria-pressed={speed === s}
                 onClick={() => useSim.getState().setSpeed(s)}
               >
-                {s}\u00d7
+                {s}×
               </button>
             ))}
           </div>
@@ -183,7 +183,7 @@ export function Hud({ reduced }: { reduced: boolean }) {
 
       {ev ? (
         <button type="button" className={`event-card ${eventOpen ? "open" : ""}`} onClick={() => setEventOpen((v) => !v)}>
-          <div className="event-kicker">SIGNAL \u00b7 {Math.floor(ev.year)}</div>
+          <div className="event-kicker">SIGNAL · {Math.floor(ev.year)}</div>
           <div className="event-title">{ev.title}</div>
           <div className="event-body">{ev.body}</div>
         </button>
@@ -242,12 +242,12 @@ export function Hud({ reduced }: { reduced: boolean }) {
             <h2 id="info-h">About this projection</h2>
             <p>
               This is a scenario, not a forecast consensus. Physical-AI takeoff aligned with Musk / Adcock:
-              <strong> 1 billion humanoids by 2036</strong> \u2014 not Morgan Stanley\u2019s 2050 case.
+              <strong> 1 billion humanoids by 2036</strong> — not Morgan Stanley's 2050 case.
             </p>
             <p>Humans follow UN WPP 2024 medium variant (peak ~10.3B around 2084).</p>
             <p>
               Unemployment is a 20th-century statistic under labor substitution. After peak displacement it falls because
-              the measure becomes meaningless \u2014 most of the \u201cunemployed\u201d are not looking.
+              the measure becomes meaningless — most of the "unemployed" are not looking.
             </p>
             <p>World GDP is real 2026 USD, compounded from 24/7 robot productivity on top of a slowly growing human baseline.</p>
             <button type="button" className="hud-btn" onClick={() => useSim.getState().setInfoOpen(false)}>
