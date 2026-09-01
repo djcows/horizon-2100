@@ -1,3 +1,5 @@
+Playable standalone: `docs/index.html` (GitHub Pages once enabled). React/R3F version lives in src/ for the Grok App Builder template.
+
 # Horizon 2100
 
 Cinematic 3D Earth visualization of the **physical AI takeoff** — 1 billion humanoids by 2036, through 2100.
@@ -23,6 +25,7 @@ src/lib/sim/{geo,projections,hotspots,events,store}.ts
 public/favicon.svg
 startup.sh
 scripts/download-earth-textures.sh
+docs/index.html     # standalone Three.js globe (no build)
 ```
 
 ## Install (in the App Builder workspace)
