@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #05070c;
+  --color-surface: #10151e;
+  --color-fg: #e8eef7;
+  --color-muted: #8b93a7;
+  --color-faint: #5c6478;
+  --color-primary: #3ee0c5;
+  --color-accent: #e8b86d;
+  --color-border: #1c2430;
+  --font-sans: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  html, body, #app { height: 100%; background: #05070c; color: #e8eef7; }
+  html, body { margin: 0; overflow: hidden; }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) { cursor: pointer; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
