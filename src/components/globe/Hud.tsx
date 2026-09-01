@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { currentEvent } from "@/lib/sim/events";
 import {
   END_YEAR,
@@ -72,7 +72,7 @@ function fmtDelta(n: number, kind: "count" | "gdp" | "pp") {
   const sign = n > 0 ? "+" : n < 0 ? "\u2212" : "";
   const abs = Math.abs(n);
   if (kind === "pp") return `${n > 0 ? "+" : n < 0 ? "\u2212" : ""}${abs.toFixed(1)} pp`;
-  if (kind === "gdp") return `${sign}${formatGdp(abs).replace("$", "$")} /yr`;
+  if (kind === "gdp") return `${sign}${formatGdp(abs)} /yr`;
   return `${sign}${formatCount(abs)} /yr`;
 }
 
@@ -271,7 +271,7 @@ function Stat({
   value: string;
   delta: string;
   deltaClass: string;
-  spark: React.ReactNode;
+  spark: ReactNode;
 }) {
   return (
     <div className="stat">
