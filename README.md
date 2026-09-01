@@ -2,23 +2,26 @@
 
 Cinematic 3D Earth visualization of the **physical AI takeoff** — 1 billion humanoids by 2036, through 2100.
 
-This repo holds the **foundation** (sim library, app shell, globe stub). Drop these files into a Grok App Builder / TanStack Start workspace (`/workspace`) on top of the stock template.
+Drop these files into a Grok App Builder / TanStack Start workspace (`/workspace`) on top of the stock template.
 
 ## Layout
 
 ```
 src/router.tsx
-src/routes/__root.tsx          # Horizon 2100 shell, AuthProvider + PreviewHostBridge
-src/routes/index.tsx           # client-only gate so three.js never SSR-crashes
+src/routes/__root.tsx
+src/routes/index.tsx
 src/styles.css
-src/components/globe/GlobeApp.tsx   # stub — 3D/HUD comes next
-src/lib/sim/geo.ts
-src/lib/sim/projections.ts     # robots / humans / unemployment / GDP 2026–2100
-src/lib/sim/hotspots.ts        # ~70 cities + supply-chain arcs
-src/lib/sim/events.ts          # timeline fly-tos
-src/lib/sim/store.ts           # zustand clock
+src/components/globe/
+  GlobeApp.tsx      # Canvas host + HUD overlay
+  Scene.tsx         # clock, sun, stars
+  Earth.tsx         # day/night shader, clouds, atmosphere
+  Activity.tsx      # beams, arcs, particles, labels
+  CameraRig.tsx     # orbit + event fly-tos
+  Hud.tsx           # mission-control overlay
+  sparks.ts         # textures, great-circles, scales
+src/lib/sim/{geo,projections,hotspots,events,store}.ts
 public/favicon.svg
-startup.sh                     # 0.0.0.0:8080 revive contract
+startup.sh
 scripts/download-earth-textures.sh
 ```
 
@@ -26,10 +29,12 @@ scripts/download-earth-textures.sh
 
 ```bash
 cd /workspace
+# copy this repo's src/components/globe, src/lib/sim, src/styles.css, scripts, startup.sh
 npm install three @react-three/fiber @react-three/drei
 npm install -D @types/three
+chmod +x scripts/download-earth-textures.sh startup.sh
 sh scripts/download-earth-textures.sh /workspace
-chmod +x startup.sh
+npm run dev   # 0.0.0.0:8080 — via scripts/with-app-env.mjs only
 ```
 
 Do **not** install rapier. Do **not** add auth routes. Do **not** start from this GitHub repo as a greenfield app — it expects the Grok App Builder template (`src/lib/auth`, `src/lib/db.ts`, `vite.config.ts`).
