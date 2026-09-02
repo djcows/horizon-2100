@@ -4,13 +4,13 @@ Cinematic 3D Earth of the physical-AI takeoff — **1 billion humanoids by 2036*
 
 ## Play it
 
-Open the standalone globe (no build):
-
 **https://cdn.jsdelivr.net/gh/djcows/horizon-2100@main/docs/index.html**
 
-Drag to spin. Scroll / pinch to zoom into city activity. Space = pause. 1/2/4/8 = speed. R = replay. Runs ~5 minutes from 2026 to 2100 at 1×.
+Drag to spin. Scroll / pinch to zoom into city activity. Tap a city to fly there. Space = pause. 1/2/4/8 = speed. R = replay. ~5 minutes from 2026 to 2100 at 1×.
 
 Source: [docs/index.html](docs/index.html) + [docs/sim.js](docs/sim.js).
+
+To host on GitHub Pages: repo Settings → Pages → Source: **GitHub Actions**.
 
 ## Scenario
 
@@ -25,14 +25,6 @@ Not a bank-consensus forecast. Physical-AI takeoff aligned with Musk / Adcock: *
 | 2052 | ~20B | 9.7B | **37% peak** | $3.2Q |
 | 2100 | 80B | 10.18B | 7.2%* | $48Q |
 
-\*Unemployment becomes a 20th-century statistic under labor substitution.
+\*Unemployment becomes a 20th-century statistic under labor substitution. Labor-force participation is the truer line (60.8% → ~21%).
 
 Humans: UN World Population Prospects 2024 medium variant (peak ~10.3B around 2084).
-
-## Controls
-
-- Drag / one-finger swipe — spin the globe
-- Scroll / pinch — zoom into factory beams and city labels
-- Click a city — fly there
-- Timeline scrub — jump year
-- Space, 1/2/4/8, R, arrows
