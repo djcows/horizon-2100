@@ -1,19 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang='en'>
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta charset='utf-8'/>
+<meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover'/>
 <title>Horizon 2100</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link rel='preconnect' href='https://fonts.googleapis.com'/>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin/>
+<link href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap' rel='stylesheet'/>
 <style>
-:root{
-  --bg:#05070c;--fg:#e8eef7;--muted:#8b93a7;--faint:#5c6478;
-  --primary:#3ee0c5;--accent:#e8b86d;
-  --sans:"Syne",ui-sans-serif,system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
+:root{--bg:#05070c;--fg:#e8eef7;--muted:#8b93a7;--faint:#5c6478;--primary:#3ee0c5;--accent:#e8b86d;--sans:'Syne',ui-sans-serif,system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace}
 *{box-sizing:border-box}
 html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var(--fg);font-family:var(--mono)}
 #c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
@@ -27,6 +22,7 @@ html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var
 .hud-month{font-size:clamp(.7rem,1.6vw,.95rem);letter-spacing:.22em;color:var(--muted)}
 .hud-era{margin-top:6px;font-size:11px;letter-spacing:.28em;color:var(--primary);font-weight:600}
 .hud-blurb{margin-top:4px;max-width:36ch;font-size:11px;line-height:1.45;color:var(--muted)}
+.ratio{margin-top:8px;font-size:10px;letter-spacing:.12em;color:var(--accent)}
 .hud-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:52%}
 .hud-btn{min-height:44px;padding:0 12px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(62,224,197,.18);background:rgba(5,7,12,.55);backdrop-filter:blur(12px);color:var(--fg);font-family:var(--mono);font-size:10px;letter-spacing:.18em;border-radius:2px;cursor:pointer}
 .hud-btn:hover,.chip:hover{border-color:rgba(62,224,197,.45);color:var(--primary)}
@@ -39,6 +35,7 @@ html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var
 .stat-label{font-size:9px;letter-spacing:.22em;color:var(--muted)}
 .stat-value{font-family:var(--sans);font-weight:700;font-size:clamp(1.05rem,2.2vw,1.55rem);letter-spacing:-.03em;margin-top:2px}
 .stat-delta{font-size:10px;margin-top:2px}
+.stat-sub{font-size:9px;color:var(--faint);margin-top:3px;letter-spacing:.08em}
 .d-teal{color:#3ee0c5}.d-gold{color:#e8b86d}
 .spark{display:block;width:100%;height:18px;margin-top:6px}
 .event-card{align-self:flex-start;max-width:min(420px,92vw);text-align:left;padding:10px 12px;border:1px solid rgba(62,224,197,.14);background:rgba(5,7,12,.58);backdrop-filter:blur(14px);color:var(--fg);border-radius:2px;cursor:pointer;font-family:var(--mono)}
@@ -50,14 +47,11 @@ html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var
 .timeline input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:0}
 .timeline input[type=range]::-webkit-slider-runnable-track{height:3px;background:linear-gradient(to right,#3ee0c5 var(--p),rgba(62,224,197,.14) var(--p));border-radius:99px}
 .timeline input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5.5px;border-radius:50%;background:#3ee0c5;border:2px solid #05070c;box-shadow:0 0 10px rgba(62,224,197,.55)}
-.timeline input[type=range]::-moz-range-track{height:3px;background:rgba(62,224,197,.14);border:none}
-.timeline input[type=range]::-moz-range-progress{height:3px;background:#3ee0c5}
-.timeline input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#3ee0c5;border:2px solid #05070c}
 .ticks{position:relative;height:14px;font-size:9px;letter-spacing:.12em;color:var(--faint)}
 .ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
 .cine-title,.horizon-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
 .cine-title{pointer-events:none;background:radial-gradient(ellipse at center,rgba(2,4,10,.25),transparent 60%)}
-.cine-title.hidden,.horizon-overlay.hidden,.info-scrim.hidden,.event-card.hidden{display:none}
+.cine-title.hidden,.horizon-overlay.hidden,.info-scrim.hidden,.event-card.hidden,.hint.off{display:none}
 .cine-kicker{font-size:11px;letter-spacing:.42em;color:var(--primary)}
 .cine-text,.horizon-word{font-family:var(--sans);font-weight:800;font-size:clamp(1.6rem,5.4vw,3.4rem);letter-spacing:.08em;margin-top:8px}
 .horizon-overlay{background:rgba(2,4,10,.55);backdrop-filter:blur(6px)}
@@ -71,12 +65,13 @@ html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var
 .hotspot-label-name{font-family:var(--sans);font-size:11px;font-weight:700;color:#e8eef7}
 .hotspot-label-cue{font-size:8px;letter-spacing:.16em;color:#3ee0c5}
 .labels{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hint{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:3;pointer-events:none;font-size:10px;letter-spacing:.22em;color:var(--muted);background:rgba(5,7,12,.6);padding:8px 14px;border:1px solid rgba(62,224,197,.16);white-space:nowrap}
 .loading{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#02040a;font-family:var(--mono);letter-spacing:.32em;color:var(--primary);font-size:11px;transition:opacity .6s ease}
 .loading.off{opacity:0;pointer-events:none}
 @media (max-width:720px){
   .hud{padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom))}
   .hud-year{font-size:clamp(1.8rem,11vw,2.6rem)}
-  .hud-blurb{display:none}
+  .hud-blurb,.hint{display:none}
   .hud-controls{max-width:48%}
   .hud-btn span{display:none}
   .hud-stats{grid-template-columns:1fr 1fr;gap:6px}
@@ -86,601 +81,87 @@ html,body,#app{height:100%;margin:0;overflow:hidden;background:#05070c;color:var
   .event-card.open .event-body{display:block}
   .hud-brand{max-width:54%}
 }
-@media (prefers-reduced-motion:reduce){.cine-title,.horizon-overlay,.event-card{animation:none}}
 </style>
 </head>
 <body>
-<div id="app">
-  <canvas id="c"></canvas>
-  <div class="vignette"></div>
-  <div class="labels" id="labels"></div>
-  <div class="hud">
-    <div class="hud-top">
-      <div class="hud-brand">
-        <div class="hud-kicker">HORIZON 2100</div>
-        <div class="hud-year-row">
-          <span class="hud-year" id="yearEl">2026</span>
-          <span class="hud-month" id="monthEl">JAN</span>
+<div id='app'>
+  <canvas id='c'></canvas>
+  <div class='vignette'></div>
+  <div class='labels' id='labels'></div>
+  <div class='hud'>
+    <div class='hud-top'>
+      <div class='hud-brand'>
+        <div class='hud-kicker'>HORIZON 2100</div>
+        <div class='hud-year-row'>
+          <span class='hud-year' id='yearEl'>2026</span>
+          <span class='hud-month' id='monthEl'>JAN</span>
         </div>
-        <div class="hud-era" id="eraEl">PILOTS</div>
-        <div class="hud-blurb" id="blurbEl">Factory trials. Optimus, Figure, and Chinese lines in the low thousands.</div>
+        <div class='hud-era' id='eraEl'>PILOTS</div>
+        <div class='hud-blurb' id='blurbEl'>Factory trials. Optimus, Figure, and Chinese lines in the low thousands.</div>
+        <div class='ratio' id='ratioEl'>1 robot : 104k humans</div>
       </div>
-      <div class="hud-controls">
-        <button type="button" class="hud-btn" id="playBtn" aria-label="Pause">
-          <svg id="icoPause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="2" width="4" height="10" fill="currentColor"/><rect x="8" y="2" width="4" height="10" fill="currentColor"/></svg>
-          <svg id="icoPlay" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="display:none"><path d="M3 2l10 5-10 5V2z" fill="currentColor"/></svg>
-          <span id="playLbl">PAUSE</span>
+      <div class='hud-controls'>
+        <button type='button' class='hud-btn' id='playBtn' aria-label='Pause'>
+          <svg id='icoPause' width='14' height='14' viewBox='0 0 14 14'><rect x='2' y='2' width='4' height='10' fill='currentColor'/><rect x='8' y='2' width='4' height='10' fill='currentColor'/></svg>
+          <svg id='icoPlay' width='14' height='14' viewBox='0 0 14 14' style='display:none'><path d='M3 2l10 5-10 5V2z' fill='currentColor'/></svg>
+          <span id='playLbl'>PAUSE</span>
         </button>
-        <div class="speed-row" role="group" aria-label="Playback speed">
-          <button type="button" class="chip chip-on" data-speed="1">1×</button>
-          <button type="button" class="chip" data-speed="2">2×</button>
-          <button type="button" class="chip" data-speed="4">4×</button>
-          <button type="button" class="chip" data-speed="8">8×</button>
+        <div class='speed-row' role='group' aria-label='Playback speed'>
+          <button type='button' class='chip chip-on' data-speed='1'>1×</button>
+          <button type='button' class='chip' data-speed='2'>2×</button>
+          <button type='button' class='chip' data-speed='4'>4×</button>
+          <button type='button' class='chip' data-speed='8'>8×</button>
         </div>
-        <button type="button" class="hud-btn" id="replayBtn" aria-label="Replay">REPLAY</button>
-        <button type="button" class="hud-btn" id="infoBtn" aria-label="Scenario notes">INFO</button>
+        <button type='button' class='hud-btn' id='replayBtn'>REPLAY</button>
+        <button type='button' class='hud-btn' id='infoBtn'>INFO</button>
       </div>
     </div>
-    <div class="hud-stats">
-      <div class="stat"><div class="stat-label">HUMANOIDS</div><div class="stat-value" id="vRobots">80.0K</div><div class="stat-delta d-teal" id="dRobots">+0 /yr</div><svg viewBox="0 0 64 20" class="spark" aria-hidden="true"><polyline id="spRobots" fill="none" stroke="#3ee0c5" stroke-width="1.25" points=""/></svg></div>
-      <div class="stat"><div class="stat-label">HUMANS</div><div class="stat-value" id="vHumans">8.30B</div><div class="stat-delta d-teal" id="dHumans">+0 /yr</div><svg viewBox="0 0 64 20" class="spark" aria-hidden="true"><polyline id="spHumans" fill="none" stroke="#8b93a7" stroke-width="1.25" points=""/></svg></div>
-      <div class="stat"><div class="stat-label">UNEMPLOYMENT</div><div class="stat-value" id="vUnemp">4.9%</div><div class="stat-delta d-gold" id="dUnemp">+0.0 pp</div><svg viewBox="0 0 64 20" class="spark" aria-hidden="true"><polyline id="spUnemp" fill="none" stroke="#e8b86d" stroke-width="1.25" points=""/></svg></div>
-      <div class="stat"><div class="stat-label">WORLD GDP</div><div class="stat-value" id="vGdp">$126T</div><div class="stat-delta d-teal" id="dGdp">+$0T /yr</div><svg viewBox="0 0 64 20" class="spark" aria-hidden="true"><polyline id="spGdp" fill="none" stroke="#e8b86d" stroke-width="1.25" points=""/></svg></div>
+    <div class='hud-stats'>
+      <div class='stat'><div class='stat-label'>HUMANOIDS</div><div class='stat-value' id='vRobots'>80.0K</div><div class='stat-delta d-teal' id='dRobots'>+0 /yr</div><svg viewBox='0 0 64 20' class='spark'><polyline id='spRobots' fill='none' stroke='#3ee0c5' stroke-width='1.25' points=''/></svg></div>
+      <div class='stat'><div class='stat-label'>HUMANS</div><div class='stat-value' id='vHumans'>8.30B</div><div class='stat-delta d-teal' id='dHumans'>+0 /yr</div><svg viewBox='0 0 64 20' class='spark'><polyline id='spHumans' fill='none' stroke='#8b93a7' stroke-width='1.25' points=''/></svg></div>
+      <div class='stat'><div class='stat-label'>UNEMPLOYMENT</div><div class='stat-value' id='vUnemp'>4.9%</div><div class='stat-delta d-gold' id='dUnemp'>+0.0 pp</div><div class='stat-sub' id='vPart'>labor force 60.8%</div><svg viewBox='0 0 64 20' class='spark'><polyline id='spUnemp' fill='none' stroke='#e8b86d' stroke-width='1.25' points=''/></svg></div>
+      <div class='stat'><div class='stat-label'>WORLD GDP</div><div class='stat-value' id='vGdp'>$126T</div><div class='stat-delta d-teal' id='dGdp'>+$0T /yr</div><svg viewBox='0 0 64 20' class='spark'><polyline id='spGdp' fill='none' stroke='#e8b86d' stroke-width='1.25' points=''/></svg></div>
     </div>
-    <button type="button" class="event-card hidden" id="eventCard">
-      <div class="event-kicker" id="eventKicker">SIGNAL · 2026</div>
-      <div class="event-title" id="eventTitle"></div>
-      <div class="event-body" id="eventBody"></div>
+    <button type='button' class='event-card hidden' id='eventCard'>
+      <div class='event-kicker' id='eventKicker'>SIGNAL · 2026</div>
+      <div class='event-title' id='eventTitle'></div>
+      <div class='event-body' id='eventBody'></div>
     </button>
-    <div class="hud-bottom">
-      <div class="timeline" id="timeline" style="--p:0%">
-        <input type="range" id="scrub" min="2026" max="2100" step="0.02" value="2026" aria-label="Timeline year"/>
-        <div class="ticks">
-          <span style="left:0%">2026</span>
-          <span style="left:13.514%">1B</span>
-          <span style="left:25.676%">PARITY</span>
-          <span style="left:100%">2100</span>
+    <div class='hud-bottom'>
+      <div class='timeline' id='timeline' style='--p:0%'>
+        <input type='range' id='scrub' min='2026' max='2100' step='0.02' value='2026' aria-label='Timeline year'/>
+        <div class='ticks'>
+          <span style='left:0%'>2026</span>
+          <span style='left:13.514%'>1B</span>
+          <span style='left:25.676%'>PARITY</span>
+          <span style='left:100%'>2100</span>
         </div>
       </div>
     </div>
-    <div class="cine-title hidden" id="cine" aria-live="polite">
-      <div class="cine-kicker">HORIZON 2100</div>
-      <div class="cine-text" id="cineText"></div>
+    <div class='cine-title hidden' id='cine'><div class='cine-kicker'>HORIZON 2100</div><div class='cine-text' id='cineText'></div></div>
+    <div class='horizon-overlay hidden' id='horizon'>
+      <div class='cine-kicker'>2100</div>
+      <div class='horizon-word'>HORIZON</div>
+      <p class='horizon-sub'>Eighty billion humanoids. Work is a hobby.</p>
+      <button type='button' class='hud-btn hud-btn-lg' id='horizonReplay'>REPLAY</button>
     </div>
-    <div class="horizon-overlay hidden" id="horizon">
-      <div class="cine-kicker">2100</div>
-      <div class="horizon-word">HORIZON</div>
-      <p class="horizon-sub">Eighty billion humanoids. Work is a hobby.</p>
-      <button type="button" class="hud-btn hud-btn-lg" id="horizonReplay">REPLAY</button>
-    </div>
-    <div class="info-scrim hidden" id="infoScrim">
-      <div class="info-panel" role="dialog" aria-labelledby="info-h" id="infoPanel">
-        <div class="hud-kicker">SCENARIO</div>
-        <h2 id="info-h">About this projection</h2>
+    <div class='info-scrim hidden' id='infoScrim'>
+      <div class='info-panel' role='dialog' id='infoPanel'>
+        <div class='hud-kicker'>SCENARIO</div>
+        <h2>About this projection</h2>
         <p>This is a scenario, not a forecast consensus. Physical-AI takeoff aligned with Musk / Adcock: <strong>1 billion humanoids by 2036</strong> — not Morgan Stanley's 2050 case.</p>
         <p>Humans follow UN WPP 2024 medium variant (peak ~10.3B around 2084).</p>
-        <p>Unemployment is a 20th-century statistic under labor substitution. After peak displacement it falls because the measure becomes meaningless — most of the "unemployed" are not looking.</p>
+        <p>Unemployment is a 20th-century statistic under labor substitution. After peak displacement it falls because the measure becomes meaningless — most of the 'unemployed' are not looking. Labor-force participation is the truer line.</p>
         <p>World GDP is real 2026 USD, compounded from 24/7 robot productivity on top of a slowly growing human baseline.</p>
-        <button type="button" class="hud-btn" id="infoClose">CLOSE</button>
+        <p>Drag to spin. Scroll or pinch to zoom into city activity. Tap a city to fly there. Five minutes at 1× from 2026 to 2100.</p>
+        <button type='button' class='hud-btn' id='infoClose'>CLOSE</button>
       </div>
     </div>
   </div>
-  <div class="loading" id="loading">HORIZON 2100</div>
+  <div class='hint' id='hint'>DRAG TO SPIN · SCROLL TO ZOOM · TAP A CITY</div>
+  <div class='loading' id='loading'>HORIZON 2100</div>
 </div>
-<script type="importmap">
-{"imports":{
-  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-}}
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-const START=2026, END=2100, DURATION=300, R=1.6, SPAN=END-START, MAX_P=1200;
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DEG=Math.PI/180;
-const SUN_DIR=new THREE.Vector3(5.5,1.8,3.2).normalize();
-const KIND={factory:'#3ee0c5',city:'#e8b86d',port:'#6ec8e8',hub:'#7eb8d4'};
-const CUE={factory:'FACTORY LINE',city:'CITY DEPLOY',port:'PORT LOGISTICS',hub:'COMMAND HUB'};
-const MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-const CINEMATIC=[[2036,'ONE BILLION HUMANOIDS'],[2045,'MORE ROBOTS THAN PEOPLE'],[2100,'HORIZON']];
-
-const ROBOTS=[[2026,8e4],[2027,2.2e5],[2028,7e5],[2029,2.2e6],[2030,8e6],[2031,2.2e7],[2032,6e7],[2033,1.5e8],[2034,3.5e8],[2035,6.5e8],[2036,1e9],[2038,2.2e9],[2040,4e9],[2042,6.5e9],[2045,1e10],[2050,1.8e10],[2055,2.5e10],[2060,3.3e10],[2070,4.8e10],[2080,6.2e10],[2090,7.2e10],[2100,8e10]];
-const HUMANS=[[2026,8.301e9],[2030,8.569e9],[2036,8.946e9],[2040,9.177e9],[2050,9.664e9],[2060,9.99e9],[2070,10.2e9],[2084,10.29e9],[2100,10.18e9]];
-const UNEMP=[[2026,4.9],[2028,5.4],[2030,6.8],[2032,8.6],[2034,10.8],[2036,13.4],[2038,16.2],[2040,19.8],[2043,25.5],[2046,31],[2050,35.2],[2052,36.8],[2056,33.5],[2060,28.4],[2065,22],[2070,17.2],[2080,11.5],[2090,8.6],[2100,7.2]];
-const GDP=[[2026,126],[2028,140],[2030,162],[2032,195],[2034,248],[2036,330],[2038,460],[2040,680],[2042,980],[2045,1650],[2050,3200],[2055,5200],[2060,7800],[2070,14500],[2080,24000],[2090,36000],[2100,48000]];
-
-function smoothstep(t){const x=Math.min(1,Math.max(0,t));return x*x*(3-2*x)}
-function lerpKeys(keys,y){
-  if(y<=keys[0][0])return keys[0][1];
-  const last=keys[keys.length-1];
-  if(y>=last[0])return last[1];
-  for(let i=0;i<keys.length-1;i++){
-    const a=keys[i],b=keys[i+1];
-    if(y<=b[0]){const t=smoothstep((y-a[0])/(b[0]-a[0]));return a[1]+(b[1]-a[1])*t}
-  }
-  return last[1];
-}
-function lerpLog(keys,y){return Math.exp(lerpKeys(keys.map(k=>[k[0],Math.log(Math.max(k[1],1))]),y))}
-function eraFor(y){
-  if(y<2029)return ['PILOTS','Factory trials. Optimus, Figure, and Chinese lines in the low thousands.'];
-  if(y<2033)return ['FACTORY FLOOR','Humanoids take first night shifts. Warehouses and auto plants go first.'];
-  if(y<2036)return ['THE STEEPENING','Unit cost collapses. Production compounds. Labor markets start to rupture.'];
-  if(y<2038)return ['ONE BILLION','A billion humanoids. More robot workers than any single country\'s labor force.'];
-  if(y<2045)return ['LABOR SUBSTITUTION','Construction, logistics, retail, care. Official unemployment climbs.'];
-  if(y<2050)return ['MORE ROBOTS THAN PEOPLE','Humanoid stock eclipses human population. Work is no longer the default.'];
-  if(y<2060)return ['POST-WAGE TRANSITION','Peak displacement. UBI and shorter weeks. Participation collapses.'];
-  if(y<2080)return ['AUTOMATED EARTH','24/7 industry. Orbital plants. Human labor is optional in rich regions.'];
-  if(y<2100)return ['OPTIONAL WORK','Human population peaks, then eases. The planet is a luminous machine.'];
-  return ['HORIZON','Eighty billion humanoids. GDP unrecognizable. Work is a hobby.'];
-}
-function sample(y){
-  y=Math.min(END,Math.max(START,y));
-  return {year:y,robots:lerpLog(ROBOTS,y),humans:lerpKeys(HUMANS,y),unemployment:lerpKeys(UNEMP,y),gdp:lerpLog(GDP,y)};
-}
-function formatCount(n){
-  const abs=Math.abs(n),sign=n<0?'\u2212':'';
-  if(abs>=1e12)return sign+(abs/1e12).toFixed(abs>=1e13?1:2)+'T';
-  if(abs>=1e9)return sign+(abs/1e9).toFixed(abs>=1e10?1:2)+'B';
-  if(abs>=1e6)return sign+(abs/1e6).toFixed(1)+'M';
-  if(abs>=1e3)return sign+(abs/1e3).toFixed(abs>=1e4?0:1)+'K';
-  return sign+abs.toFixed(0);
-}
-function formatGdp(t){
-  const abs=Math.abs(t),sign=t<0?'\u2212':'';
-  if(abs>=1000)return sign+'$'+(abs/1000).toFixed(abs>=10000?1:2)+'Q';
-  return sign+'$'+(abs>=100?abs.toFixed(0):abs.toFixed(1))+'T';
-}
-function fmtDelta(n,kind){
-  const sign=n>0?'+':n<0?'\u2212':'';
-  const abs=Math.abs(n);
-  if(kind==='pp')return sign+abs.toFixed(1)+' pp';
-  if(kind==='gdp')return sign+formatGdp(abs)+' /yr';
-  return sign+formatCount(abs)+' /yr';
-}
-function robotActivity(robots){const log=Math.log10(Math.max(robots,1));return Math.min(1,Math.max(0,(log-4.8)/6.2))}
-function mulberry32(a){return()=>{a|=0;a=a+0x6d2b79f5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function latLonToXYZ(lat,lon,r){
-  const phi=(90-lat)*DEG,theta=(lon+180)*DEG;
-  return new THREE.Vector3(-r*Math.sin(phi)*Math.cos(theta),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(theta));
-}
-function intensity(h,y){if(y<h.start)return 0;const t=Math.min(1,(y-h.start)/8);return h.w*t*t*(3-2*t)}
-
-const RAW=[
-['austin','Austin',30.2672,-97.7431,2026,1,'factory'],
-['fremont','Fremont / Bay Area',37.5485,-121.9886,2026,1,'factory'],
-['los-angeles','Los Angeles',34.0522,-118.2437,2027,.8,'city'],
-['seattle','Seattle',47.6062,-122.3321,2027,.7,'city'],
-['nyc','New York',40.7128,-74.006,2027,.85,'city'],
-['boston','Boston',42.3601,-71.0589,2027,.7,'hub'],
-['detroit','Detroit',42.3314,-83.0458,2027,.75,'factory'],
-['chicago','Chicago',41.8781,-87.6298,2028,.7,'city'],
-['houston','Houston',29.7604,-95.3698,2028,.6,'port'],
-['mexico-city','Mexico City',19.4326,-99.1332,2034,.55,'city'],
-['shenzhen','Shenzhen',22.5431,114.0579,2026,1,'factory'],
-['shanghai','Shanghai',31.2304,121.4737,2026,1,'port'],
-['beijing','Beijing',39.9042,116.4074,2027,.85,'city'],
-['guangzhou','Guangzhou',23.1291,113.2644,2027,.8,'factory'],
-['wuhan','Wuhan',30.5928,114.3055,2028,.7,'factory'],
-['hangzhou','Hangzhou',30.2741,120.1551,2028,.75,'hub'],
-['suzhou','Suzhou',31.2989,120.5853,2027,.8,'factory'],
-['tokyo','Tokyo',35.6762,139.6503,2026,1,'city'],
-['osaka','Osaka',34.6937,135.5023,2027,.7,'factory'],
-['seoul','Seoul',37.5665,126.978,2026,1,'city'],
-['busan','Busan',35.1796,129.0756,2028,.6,'port'],
-['taipei','Taipei',25.033,121.5654,2028,.65,'hub'],
-['berlin','Berlin',52.52,13.405,2027,.7,'city'],
-['munich','Munich',48.1351,11.582,2027,.75,'factory'],
-['stuttgart','Stuttgart',48.7758,9.1829,2026,.8,'factory'],
-['paris','Paris',48.8566,2.3522,2028,.75,'city'],
-['london','London',51.5074,-0.1278,2028,.8,'city'],
-['rotterdam','Rotterdam',51.9244,4.4777,2028,.7,'port'],
-['milan','Milan',45.4642,9.19,2029,.6,'city'],
-['brussels','Brussels',50.8503,4.3517,2029,.45,'hub'],
-['bangalore','Bangalore',12.9716,77.5946,2031,.8,'hub'],
-['mumbai','Mumbai',19.076,72.8777,2031,.7,'city'],
-['chennai','Chennai',13.0827,80.2707,2031,.6,'factory'],
-['singapore','Singapore',1.3521,103.8198,2030,.85,'hub'],
-['jakarta','Jakarta',-6.2088,106.8456,2032,.6,'city'],
-['dubai','Dubai',25.2048,55.2708,2030,.75,'city'],
-['riyadh','Riyadh',24.7136,46.6753,2030,.65,'city'],
-['lagos','Lagos',6.5244,3.3792,2036,.6,'city'],
-['nairobi','Nairobi',-1.2921,36.8219,2038,.5,'city'],
-['johannesburg','Johannesburg',-26.2041,28.0473,2036,.55,'city'],
-['cairo','Cairo',30.0444,31.2357,2036,.5,'city'],
-['sao-paulo','Sao Paulo',-23.5505,-46.6333,2034,.7,'city'],
-['rio','Rio',-22.9068,-43.1729,2034,.5,'city'],
-['sydney','Sydney',-33.8688,151.2093,2030,.6,'city'],
-['melbourne','Melbourne',-37.8136,144.9631,2030,.5,'city'],
-['toronto','Toronto',43.6532,-79.3832,2028,.65,'city'],
-['vancouver','Vancouver',49.2827,-123.1207,2029,.5,'city'],
-['moscow','Moscow',55.7558,37.6173,2032,.55,'city'],
-['istanbul','Istanbul',41.0082,28.9784,2032,.6,'city'],
-['buenos-aires','Buenos Aires',-34.6037,-58.3816,2034,.55,'city']
-];
-const HOTSPOTS=RAW.map(([id,name,lat,lon,start,w,kind])=>({id,name,lat,lon,start,w,kind}));
-const BY={};for(const h of HOTSPOTS)BY[h.id]=h;
-const ARCS=[
-['shenzhen','austin'],['shanghai','rotterdam'],['tokyo','los-angeles'],['seoul','detroit'],
-['shenzhen','singapore'],['shanghai','los-angeles'],['austin','mexico-city'],['munich','detroit'],
-['stuttgart','shanghai'],['london','nyc'],['singapore','bangalore'],['dubai','shenzhen'],
-['rotterdam','nyc'],['sao-paulo','houston'],['sydney','tokyo'],['fremont','taipei']
-];
-const EVENTS=[
-[2026.3,'Optimus factory pilots','Tesla starts limited Optimus runs on the Austin line. Units still need handlers. The first night the lights stay on without a second shift of humans.','austin'],
-[2027.4,'Figure + BMW production cells','Figure humanoids take over discrete BMW cells. Cycle time is ugly. Uptime is not. OEMs stop arguing about whether and start arguing about when.','munich'],
-[2028.2,'China humanoid industrial policy','Shenzhen is designated a national humanoid manufacturing cluster. Subsidies, land, and component lines stack. Unit costs start their long fall.','shenzhen'],
-[2029.1,'First fully robot night shift','US warehouses run a full night with no human pickers on the floor. Insurance, unions, and city councils notice in that order.','chicago'],
-[2030.0,'Eight million humanoids','Installed stock crosses 8 million. Still a rounding error next to the global labor force — and already the fastest-growing capital stock on Earth.',null],
-[2031.5,'Construction humanoids, Gulf megaprojects','Dubai and Riyadh specify humanoid crews for heat-of-day pours and night logistics. Human heat-stress deaths on those sites drop. Headcount does too.','dubai'],
-[2032.4,'Elder-care pilots — Tokyo','Japan\'s care shortage forces the issue. Humanoids do lifts, nights, and meds-on-schedule. Families stay for the conversation.','tokyo'],
-[2033.2,'Unit cost under $15k','Bill of materials, actuators, and inference silicon all compress. Household waitlists open. The factory is now the product.','shenzhen'],
-[2034.6,'Trucking & last-mile displacement wave','Humanoid loaders plus autonomy empty the dock. Long-haul drivers become remote supervisors, then become optional.','houston'],
-[2035.5,'OECD manufacturing employment breaks','650 million humanoids. Factory employment in the OECD peaks in the rear-view. The charts look like deindustrialization. Output does not.','detroit'],
-[2036.0,'ONE BILLION HUMANOIDS','A billion bodies that do not sleep. More robot workers than any single country\'s labor force. The steepening is no longer a forecast.','austin'],
-[2038.2,'National UBI pilots','Several OECD states trial floor income as participation slides. The political fight is over the size of the floor, not whether one exists.','london'],
-[2040.0,'Four billion humanoids','Robot stock is closing on half of humanity. Construction, retail, and logistics are majority-automated in rich cities.',null],
-[2042.4,'African industrial leapfrog','Lagos and Nairobi skip the 20th-century factory workforce. Humanoid plants go up next to ports. The labor-intensity phase never arrives.','lagos'],
-[2045.0,'Ten billion — more humanoids than humans','Installed humanoids eclipse world population. Work is no longer the default condition of adult life in the rich world.',null],
-[2048.3,'Labor-force participation under 45%','Paid work becomes a minority activity among working-age adults in the OECD. Status migrates to craft, care, science, and spectacle.',null],
-[2050.0,'World GDP crosses $3 quadrillion','Real 2026 dollars. The human economy is a rounding error inside a machine economy that runs through the night.',null],
-[2052.0,'Peak official unemployment 37%','The statistic is a 20th-century instrument. Most of the 37% are not looking. Constitutions start to notice.',null],
-[2055.5,'Post-work constitutions','A first wave of charters decouple citizenship from employment. Income, compute, and robot-time become political questions.','brussels'],
-[2060.0,'Orbital factories staffed by humanoids','Vacuum, radiation, and 24/7 shifts are free. The first closed-loop orbital plants need no life support for the crew.',null],
-[2070.0,'Human population growth ~0','UN medium path flattens. Births match deaths. The planet\'s workforce keeps compounding anyway.',null],
-[2084.0,'Human population peaks 10.3 billion','The last uptick. After this the human census eases while the robot census does not.',null],
-[2100.0,'Horizon: 80 billion humanoids','Eighty billion humanoids. GDP unrecognizable. Work is a hobby. The Earth is a luminous machine with a small, optional crew.',null]
-].map(([y,t,b,h])=>({y,t,b,h}));
-function currentEvent(year){let f=null;for(const e of EVENTS)if(year>=e.y)f=e;return f}
-
-const ser={robots:[],humans:[],unemp:[],gdp:[]};
-for(let y=START;y<=END;y++){const s=sample(y);ser.robots.push(s.robots);ser.humans.push(s.humans);ser.unemp.push(s.unemployment);ser.gdp.push(s.gdp)}
-
-const VERT=`
-varying vec2 vUv;varying vec3 vNormalW;varying vec3 vPosW;
-void main(){
-  vUv=uv;vec4 wpos=modelMatrix*vec4(position,1.0);vPosW=wpos.xyz;
-  vNormalW=normalize(mat3(modelMatrix)*normal);
-  gl_Position=projectionMatrix*viewMatrix*wpos;
-}`;
-const FRAG=`
-uniform sampler2D dayMap;uniform sampler2D nightMap;uniform vec3 sunDir;uniform float activity;
-varying vec2 vUv;varying vec3 vNormalW;varying vec3 vPosW;
-void main(){
-  vec3 n=normalize(vNormalW);vec3 l=normalize(sunDir);
-  float ndl=dot(n,l);
-  float dayF=smoothstep(-0.12,0.22,ndl);
-  float term=1.0-smoothstep(0.0,0.18,abs(ndl-0.02));
-  vec3 dayC=texture2D(dayMap,vUv).rgb;
-  vec3 nightC=texture2D(nightMap,vUv).rgb;
-  nightC*=(0.7+1.8*activity);
-  vec3 col=mix(nightC,dayC,dayF);
-  col+=vec3(1.0,0.52,0.18)*term*0.32;
-  float nde=max(dot(n,normalize(cameraPosition-vPosW)),0.0);
-  col*=0.78+0.22*nde;
-  gl_FragColor=vec4(col,1.0);
-}`;
-const ATM=`
-varying vec3 vNormalW;varying vec3 vPosW;
-void main(){
-  vec3 n=normalize(vNormalW);vec3 v=normalize(cameraPosition-vPosW);
-  float f=pow(1.0-abs(dot(n,v)),2.55);
-  vec3 col=mix(vec3(0.04,0.32,0.62),vec3(0.45,0.92,1.0),f);
-  gl_FragColor=vec4(col,clamp(f*0.75,0.0,0.85));
-}`;
-
-function fillEllipse(ctx,lon,lat,rx,ry,color){
-  const w=ctx.canvas.width,h=ctx.canvas.height;
-  const cx=((lon+180)/360)*w,cy=((90-lat)/180)*h;
-  ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(cx,cy,rx*w,ry*h,0,0,Math.PI*2);ctx.fill();
-  if(cx<rx*w){ctx.beginPath();ctx.ellipse(cx+w,cy,rx*w,ry*h,0,0,Math.PI*2);ctx.fill()}
-  else if(cx>w-rx*w){ctx.beginPath();ctx.ellipse(cx-w,cy,rx*w,ry*h,0,0,Math.PI*2);ctx.fill()}
-}
-function paintContinents(ctx,land,desert,ice){
-  fillEllipse(ctx,-100,45,.12,.14,land);fillEllipse(ctx,-88,38,.08,.08,land);fillEllipse(ctx,-112,54,.1,.08,land);
-  fillEllipse(ctx,-68,-10,.07,.16,land);fillEllipse(ctx,-62,-20,.055,.12,land);fillEllipse(ctx,18,8,.07,.16,land);
-  fillEllipse(ctx,22,0,.05,.12,desert);fillEllipse(ctx,12,50,.08,.07,land);fillEllipse(ctx,40,54,.09,.05,land);
-  fillEllipse(ctx,80,50,.16,.1,land);fillEllipse(ctx,100,35,.12,.1,land);fillEllipse(ctx,78,22,.055,.07,desert);
-  fillEllipse(ctx,114,22,.04,.05,land);fillEllipse(ctx,134,-25,.055,.05,desert);fillEllipse(ctx,165,-42,.03,.06,land);
-  fillEllipse(ctx,37,25,.04,.04,desert);fillEllipse(ctx,-42,72,.06,.05,ice);fillEllipse(ctx,0,90,.5,.06,ice);
-  fillEllipse(ctx,0,-90,.5,.07,ice);fillEllipse(ctx,46,62,.12,.05,land);fillEllipse(ctx,105,60,.14,.06,land);
-}
-function canvasTex(draw){
-  const c=document.createElement('canvas');c.width=1024;c.height=512;draw(c.getContext('2d'));
-  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;t.needsUpdate=true;return t;
-}
-function makeDay(){return canvasTex(ctx=>{
-  const g=ctx.createLinearGradient(0,0,0,ctx.canvas.height);
-  g.addColorStop(0,'#7ea8c9');g.addColorStop(.18,'#0c4a7a');g.addColorStop(.5,'#083868');g.addColorStop(.82,'#0c4a7a');g.addColorStop(1,'#c5d6e4');
-  ctx.fillStyle=g;ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);paintContinents(ctx,'#2f6b3c','#8a7a42','#e4eef6');
-})}
-function makeNight(){return canvasTex(ctx=>{
-  ctx.fillStyle='#02040c';ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);paintContinents(ctx,'#08140c','#12100a','#0c1218');
-  const rng=mulberry32(2100);
-  for(let i=0;i<1800;i++){const x=rng()*ctx.canvas.width,y=(.18+rng()*.62)*ctx.canvas.height;ctx.fillStyle=`rgba(255,${200+rng()*40|0},${120+rng()*60|0},${.25+rng()*.75})`;ctx.beginPath();ctx.arc(x,y,rng()*1.4+.3,0,Math.PI*2);ctx.fill()}
-})}
-function makeCloud(){return canvasTex(ctx=>{
-  ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-  const rng=mulberry32(77);
-  for(let i=0;i<420;i++){const x=rng()*ctx.canvas.width,y=rng()*ctx.canvas.height,r=12+rng()*48;ctx.fillStyle=`rgba(255,255,255,${.04+rng()*.16})`;ctx.beginPath();ctx.ellipse(x,y,r,r*(.4+rng()*.5),rng()*Math.PI,0,Math.PI*2);ctx.fill()}
-})}
-function prep(t){t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.needsUpdate=true;return t}
-function loadTex(url){return new Promise(res=>{const l=new THREE.TextureLoader();l.setCrossOrigin('anonymous');l.load(url,t=>res(t),undefined,()=>res(null))})}
-function greatCircle(lat1,lon1,lat2,lon2,seg=48,bump=.28){
-  const va=latLonToXYZ(lat1,lon1,1),vb=latLonToXYZ(lat2,lon2,1);
-  const omega=Math.acos(Math.min(1,Math.max(-1,va.dot(vb)))),so=Math.sin(omega);
-  const pts=[];
-  for(let i=0;i<=seg;i++){
-    const t=i/seg;let p;
-    if(so<1e-5)p=va.clone();
-    else p=va.clone().multiplyScalar(Math.sin((1-t)*omega)/so).add(vb.clone().multiplyScalar(Math.sin(t*omega)/so));
-    p.normalize().multiplyScalar(R+.034+Math.sin(t*Math.PI)*bump);pts.push(p);
-  }
-  return pts;
-}
-
-const canvas=document.getElementById('c');
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
-renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-renderer.setClearColor('#02040a',1);
-renderer.setPixelRatio(Math.min(1.75,devicePixelRatio||1));
-const scene=new THREE.Scene();scene.background=new THREE.Color('#02040a');scene.fog=new THREE.Fog('#02040a',12,48);
-const camera=new THREE.PerspectiveCamera(42,2,.12,80);camera.position.set(0,.35,5.4);
-const controls=new OrbitControls(camera,canvas);
-controls.enablePan=false;controls.enableDamping=true;controls.dampingFactor=.068;
-controls.minDistance=2.15;controls.maxDistance=8.5;controls.autoRotateSpeed=.18;controls.rotateSpeed=.72;controls.zoomSpeed=.85;
-controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY;
-
-let interacting=false,flying=false,flyUntil=0,resumeAt=0,elapsed=0,lastEventYear=-1;
-const flyTarget=new THREE.Vector3(0,.35,5.4);
-controls.addEventListener('start',()=>{interacting=true;flying=false});
-controls.addEventListener('end',()=>{interacting=false;resumeAt=elapsed+1.2});
-
-const sunPos=SUN_DIR.clone().multiplyScalar(18);
-const dir=new THREE.DirectionalLight('#fff1d0',2.2);dir.position.copy(sunPos);scene.add(dir);
-scene.add(new THREE.HemisphereLight('#1a3355','#09080a',.3));
-scene.add(new THREE.AmbientLight(0xffffff,.045));
-const sunMesh=new THREE.Mesh(new THREE.SphereGeometry(.13,16,16),new THREE.MeshBasicMaterial({color:'#fff6d8'}));
-sunMesh.position.copy(sunPos);scene.add(sunMesh);
-
-(function stars(){
-  const n=reduced?1400:4500,pos=new Float32Array(n*3);
-  for(let i=0;i<n;i++){
-    const u=Math.random(),v=Math.random(),th=2*Math.PI*u,ph=Math.acos(2*v-1),r=32+Math.random()*28;
-    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);
-  }
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xe8eef7,size:.055,sizeAttenuation:true,transparent:true,opacity:.9,depthWrite:false,toneMapped:false})));
-})();
-
-const uniforms={dayMap:{value:makeDay()},nightMap:{value:makeNight()},sunDir:{value:SUN_DIR.clone()},activity:{value:0}};
-const earthMat=new THREE.ShaderMaterial({vertexShader:VERT,fragmentShader:FRAG,uniforms,toneMapped:true});
-const earth=new THREE.Mesh(new THREE.SphereGeometry(R,96,64),earthMat);scene.add(earth);
-const cloudMap=makeCloud();
-const clouds=new THREE.Mesh(new THREE.SphereGeometry(R,64,48),new THREE.MeshBasicMaterial({map:cloudMap,transparent:true,opacity:.38,depthWrite:false,side:THREE.DoubleSide,color:'#dfe9f4'}));
-clouds.scale.setScalar(1.012);scene.add(clouds);
-const atm=new THREE.Mesh(new THREE.SphereGeometry(R,64,48),new THREE.ShaderMaterial({vertexShader:VERT,fragmentShader:ATM,side:THREE.BackSide,transparent:true,depthWrite:false,toneMapped:true}));
-atm.scale.setScalar(1.046);scene.add(atm);
-
-const origins=HOTSPOTS.map(h=>{const p=latLonToXYZ(h.lat,h.lon,R);const n=p.clone().normalize();return{h,p,n,color:new THREE.Color(KIND[h.kind]||'#3ee0c5')}});
-const nH=origins.length;
-const beamMesh=new THREE.InstancedMesh(new THREE.CylinderGeometry(.006,.016,1,6,1,true),new THREE.MeshBasicMaterial({transparent:true,opacity:.72,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,vertexColors:true}),nH);
-const glowMesh=new THREE.InstancedMesh(new THREE.SphereGeometry(1,10,8),new THREE.MeshBasicMaterial({transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,vertexColors:true}),nH);
-scene.add(beamMesh,glowMesh);
-const dummy=new THREE.Object3D(),_c=new THREE.Color(),UP=new THREE.Vector3(0,1,0);
-
-const rng=mulberry32(36);
-const ppos=new Float32Array(MAX_P*3),pcol=new Float32Array(MAX_P*3),owner=new Uint16Array(MAX_P);
-const wsum=origins.reduce((a,o)=>a+o.h.w,0);
-for(let i=0;i<MAX_P;i++){
-  let r=rng()*wsum,idx=0;
-  for(let k=0;k<origins.length;k++){r-=origins[k].h.w;if(r<=0){idx=k;break}}
-  const o=origins[idx];
-  const p=latLonToXYZ(o.h.lat+(rng()-.5)*3.2,o.h.lon+(rng()-.5)*4.4,R+.02+rng()*.08);
-  ppos[i*3]=p.x;ppos[i*3+1]=p.y;ppos[i*3+2]=p.z;pcol[i*3]=o.color.r;pcol[i*3+1]=o.color.g;pcol[i*3+2]=o.color.b;owner[i]=idx;
-}
-const pgeo=new THREE.BufferGeometry();
-pgeo.setAttribute('position',new THREE.BufferAttribute(ppos.slice(),3));
-pgeo.setAttribute('color',new THREE.BufferAttribute(pcol,3));
-const pts=new THREE.Points(pgeo,new THREE.PointsMaterial({size:.03,vertexColors:true,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true,toneMapped:false}));
-scene.add(pts);
-
-const arcLines=ARCS.map(([a,b])=>{
-  const from=BY[a],to=BY[b];if(!from||!to)return null;
-  const geo=new THREE.BufferGeometry().setFromPoints(greatCircle(from.lat,from.lon,to.lat,to.lon));
-  const mat=new THREE.LineDashedMaterial({color:KIND[from.kind]||'#3ee0c5',transparent:true,opacity:0,dashSize:.09,gapSize:.05,depthWrite:false,blending:THREE.AdditiveBlending});
-  const line=new THREE.Line(geo,mat);line.computeLineDistances();scene.add(line);
-  return {from,to,line,op:0};
-}).filter(Boolean);
-
-Promise.all([
-  loadTex('https://cdn.jsdelivr.net/npm/three-globe@2.44.1/example/img/earth-blue-marble.jpg'),
-  loadTex('https://cdn.jsdelivr.net/npm/three-globe@2.44.1/example/img/earth-night.jpg'),
-  loadTex('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r170/examples/textures/planets/earth_clouds_1024.png')
-]).then(([day,night,cld])=>{
-  if(day){uniforms.dayMap.value.dispose();uniforms.dayMap.value=prep(day);earthMat.needsUpdate=true}
-  if(night){uniforms.nightMap.value.dispose();uniforms.nightMap.value=prep(night);earthMat.needsUpdate=true}
-  if(cld){cloudMap.dispose();clouds.material.map=prep(cld);clouds.material.needsUpdate=true}
-  document.getElementById('loading').classList.add('off');
-});
-setTimeout(()=>document.getElementById('loading').classList.add('off'),2500);
-
-let year=START,playing=true,speed=1,finished=false,wasPlaying=true,eventOpen=false;
-const cineFired=new Set();
-let cineTimer=0,hudAcc=0,labelAcc=0;
-
-function setYear(y){
-  year=Math.min(END,Math.max(START,y));
-  finished=year>=END;
-  if(finished)playing=false;
-  if(year<=START+.05){lastEventYear=-1;cineFired.clear()}
-}
-function replay(){year=START;playing=true;finished=false;flying=false;lastEventYear=-1;cineFired.clear();document.getElementById('cine').classList.add('hidden')}
-function toggle(){if(finished){replay();return}playing=!playing}
-
-document.getElementById('playBtn').onclick=toggle;
-document.getElementById('replayBtn').onclick=replay;
-document.getElementById('horizonReplay').onclick=replay;
-document.getElementById('infoBtn').onclick=()=>document.getElementById('infoScrim').classList.remove('hidden');
-document.getElementById('infoClose').onclick=()=>document.getElementById('infoScrim').classList.add('hidden');
-document.getElementById('infoScrim').onclick=e=>{if(e.target.id==='infoScrim')e.currentTarget.classList.add('hidden')};
-document.getElementById('infoPanel').onclick=e=>e.stopPropagation();
-document.getElementById('eventCard').onclick=()=>{eventOpen=!eventOpen;document.getElementById('eventCard').classList.toggle('open',eventOpen)};
-document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{speed=+ch.dataset.speed;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('chip-on',+c.dataset.speed===speed))});
-const scrub=document.getElementById('scrub');
-scrub.addEventListener('pointerdown',()=>{wasPlaying=playing;playing=false});
-scrub.addEventListener('pointerup',()=>{if(wasPlaying&&!finished)playing=true});
-scrub.addEventListener('input',()=>setYear(+scrub.value));
-window.addEventListener('keydown',e=>{
-  const el=e.target;if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'||el.isContentEditable))return;
-  if(e.code==='Space'){e.preventDefault();toggle()}
-  else if(e.key==='ArrowLeft'){e.preventDefault();setYear(year-1)}
-  else if(e.key==='ArrowRight'){e.preventDefault();setYear(year+1)}
-  else if(e.key==='1'||e.key==='2'||e.key==='4'||e.key==='8'){speed=+e.key;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('chip-on',+c.dataset.speed===speed))}
-  else if(e.key==='r'||e.key==='R')replay();
-});
-
-function sparkPts(data,y){
-  const i=Math.min(data.length-1,Math.max(0,Math.floor(y)-START));
-  const slice=data.slice(0,i+1);const mn=Math.min(...slice),mx=Math.max(...slice),span=mx-mn||1;
-  return slice.map((v,k)=>((k/Math.max(slice.length-1,1))*64).toFixed(2)+','+(18-((v-mn)/span)*16).toFixed(2)).join(' ');
-}
-function pulseAt(y,mark){const d=Math.abs(y-mark);return d>.55?0:Math.exp(-d*d*18)}
-
-const labelsEl=document.getElementById('labels');
-const ndc=new THREE.Vector3();
-
-function resize(){
-  const w=innerWidth,h=innerHeight;
-  renderer.setPixelRatio(Math.min(1.75,devicePixelRatio||1));
-  renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
-}
-addEventListener('resize',resize);resize();
-
-let last=performance.now();
-function loop(now){
-  const dt=Math.min(.05,(now-last)/1000);last=now;elapsed+=dt;
-  if(playing){
-    year+=dt*(SPAN/DURATION)*speed;
-    if(year>=END){year=END;playing=false;finished=true}
-  }
-  const snap=sample(year);
-  const act=robotActivity(snap.robots);
-  earthMat.uniforms.activity.value=act;
-  earthMat.uniforms.sunDir.value.copy(SUN_DIR);
-  if(!reduced)clouds.rotation.y+=dt*.052;
-
-  const pulse=reduced?0:Math.max(pulseAt(year,2036),pulseAt(year,2045)*.7,pulseAt(year,2100)*.8);
-  for(let i=0;i<nH;i++){
-    const o=origins[i],inten=intensity(o.h,year),hgt=(.07+inten*(.16+act*.38))*(1+pulse*1.35),vis=inten>.01;
-    dummy.position.copy(o.p).addScaledVector(o.n,vis?hgt*.5:-10);
-    dummy.quaternion.setFromUnitVectors(UP,o.n);
-    dummy.scale.set(.55+inten*.8,Math.max(hgt,.001),.55+inten*.8);
-    dummy.updateMatrix();beamMesh.setMatrixAt(i,dummy.matrix);_c.copy(o.color);beamMesh.setColorAt(i,_c);
-    dummy.position.copy(o.p).addScaledVector(o.n,.03);dummy.quaternion.identity();
-    dummy.scale.setScalar(vis ? 0.018+inten*0.03*(1+pulse) : 0.0001);dummy.updateMatrix();
-    glowMesh.setMatrixAt(i,dummy.matrix);glowMesh.setColorAt(i,_c);
-  }
-  beamMesh.instanceMatrix.needsUpdate=true;glowMesh.instanceMatrix.needsUpdate=true;
-  if(beamMesh.instanceColor)beamMesh.instanceColor.needsUpdate=true;
-  if(glowMesh.instanceColor)glowMesh.instanceColor.needsUpdate=true;
-
-  const visCount=Math.floor(80+act*(MAX_P-80));
-  pgeo.setDrawRange(0,visCount);
-  const dist=camera.position.length();
-  pts.material.size=dist<3 ? 0.045 : 0.028;pts.material.opacity=.35+act*.5;
-  if(!reduced){
-    const arr=pgeo.attributes.position.array;
-    for(let i=0;i<visCount;i++){
-      const o=origins[owner[i]];if(intensity(o.h,year)<=0)continue;
-      const wob=Math.sin(elapsed*1.7+i*.13)*.002;
-      arr[i*3]=ppos[i*3]+o.n.x*wob;arr[i*3+1]=ppos[i*3+1]+o.n.y*wob;arr[i*3+2]=ppos[i*3+2]+o.n.z*wob;
-    }
-    pgeo.attributes.position.needsUpdate=true;
-  }
-  for(const a of arcLines){
-    const on=year>=a.from.start&&year>=a.to.start;const target=on ? 0.62 : 0;
-    a.op+=(target-a.op)*Math.min(1,dt*2.4);a.line.material.opacity=a.op;
-    if(!reduced)a.line.material.dashOffset-=dt*.35;
-  }
-
-  const ev=currentEvent(year);
-  if(ev&&ev.h&&ev.y!==lastEventYear&&year>=ev.y&&year<ev.y+.35&&!interacting){
-    const h=BY[ev.h];
-    if(h){lastEventYear=ev.y;flyTarget.copy(latLonToXYZ(h.lat,h.lon,3.1));flying=true;flyUntil=elapsed+5}
-  }
-  if(year<=START+.02)lastEventYear=-1;
-  if(flying){
-    if(interacting)flying=false;
-    else{
-      camera.position.lerp(flyTarget,1-Math.exp(-2.1*dt));camera.lookAt(0,0,0);controls.target.set(0,0,0);
-      if(elapsed>flyUntil)flying=false;
-    }
-  }
-  controls.autoRotate=!reduced&&!interacting&&!flying&&elapsed>=resumeAt;
-  controls.update();
-  renderer.render(scene,camera);
-
-  labelAcc+=dt;
-  if(labelAcc>.25){
-    labelAcc=0;labelsEl.innerHTML='';
-    if(dist<3){
-      origins.map(o=>({o,i:intensity(o.h,year)})).filter(x=>x.i>.15).sort((a,b)=>b.i-a.i).slice(0,8).forEach(x=>{
-        const p=x.o.p.clone().addScaledVector(x.o.n,.12);ndc.copy(p).project(camera);
-        if(ndc.z>1)return;
-        const d=document.createElement('div');d.className='hotspot-label';
-        d.style.left=((ndc.x*.5+.5)*innerWidth)+'px';d.style.top=((-.5*ndc.y+.5)*innerHeight)+'px';
-        d.innerHTML='<div class="hotspot-label-name">'+x.o.h.name+'</div><div class="hotspot-label-cue">'+(CUE[x.o.h.kind]||'')+'</div>';
-        labelsEl.appendChild(d);
-      });
-    }
-  }
-
-  hudAcc+=dt;
-  if(hudAcc>.08){hudAcc=0;syncHud()}
-  if(!reduced){
-    for(const [y,t] of CINEMATIC){
-      if(year>=y&&year<y+.45&&!cineFired.has(y)){
-        cineFired.add(y);document.getElementById('cineText').textContent=t;document.getElementById('cine').classList.remove('hidden');
-        clearTimeout(cineTimer);cineTimer=setTimeout(()=>document.getElementById('cine').classList.add('hidden'),4200);
-      }
-    }
-  }
-  requestAnimationFrame(loop);
-}
-function syncHud(){
-  const snap=sample(year),prev=sample(year-1),era=eraFor(year);
-  document.getElementById('yearEl').textContent=String(Math.floor(year));
-  document.getElementById('monthEl').textContent=MONTHS[Math.min(11,Math.floor((year-Math.floor(year))*12))];
-  document.getElementById('eraEl').textContent=era[0];document.getElementById('blurbEl').textContent=era[1];
-  document.getElementById('vRobots').textContent=formatCount(snap.robots);
-  document.getElementById('vHumans').textContent=formatCount(snap.humans);
-  document.getElementById('vUnemp').textContent=snap.unemployment.toFixed(1)+'%';
-  document.getElementById('vGdp').textContent=formatGdp(snap.gdp);
-  const dR=snap.robots-prev.robots,dH=snap.humans-prev.humans,dU=snap.unemployment-prev.unemployment,dG=snap.gdp-prev.gdp;
-  document.getElementById('dRobots').textContent=fmtDelta(dR,'count');
-  const dHum=document.getElementById('dHumans');dHum.textContent=fmtDelta(dH,'count');dHum.className='stat-delta '+(dH>=0?'d-teal':'d-gold');
-  const dUn=document.getElementById('dUnemp');dUn.textContent=fmtDelta(dU,'pp');dUn.className='stat-delta '+(dU>=0?'d-gold':'d-teal');
-  document.getElementById('dGdp').textContent=fmtDelta(dG,'gdp');
-  document.getElementById('spUnemp').setAttribute('stroke',dU>=0?'#e8b86d':'#3ee0c5');
-  document.getElementById('spRobots').setAttribute('points',sparkPts(ser.robots,year));
-  document.getElementById('spHumans').setAttribute('points',sparkPts(ser.humans,year));
-  document.getElementById('spUnemp').setAttribute('points',sparkPts(ser.unemp,year));
-  document.getElementById('spGdp').setAttribute('points',sparkPts(ser.gdp,year));
-  const ev=currentEvent(year),card=document.getElementById('eventCard');
-  if(ev){card.classList.remove('hidden');document.getElementById('eventKicker').textContent='SIGNAL \u00b7 '+Math.floor(ev.y);document.getElementById('eventTitle').textContent=ev.t;document.getElementById('eventBody').textContent=ev.b}
-  else card.classList.add('hidden');
-  const p=((year-START)/SPAN)*100;document.getElementById('timeline').style.setProperty('--p',p+'%');scrub.value=String(year);
-  document.getElementById('playLbl').textContent=playing?'PAUSE':'PLAY';
-  document.getElementById('icoPause').style.display=playing?'':'none';
-  document.getElementById('icoPlay').style.display=playing?'none':'';
-  document.getElementById('playBtn').setAttribute('aria-label',playing?'Pause':'Play');
-  document.getElementById('horizon').classList.toggle('hidden',!finished);
-}
-syncHud();
-requestAnimationFrame(loop);
-</script>
+<script type='importmap'>{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type='module' src='./sim.js'></script>
 </body>
 </html>
